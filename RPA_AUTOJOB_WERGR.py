@@ -771,7 +771,7 @@ def main():
             sess.StartTransaction("SE16N"); time.sleep(1.0)
             _set_table_name(sess, TABLE_NAME)
             choose_variant(sess, VARIANT_NAME, VARIANT_USER)
-            fill_running_datetime(sess, minus_hours=1)
+            fill_running_datetime(sess, minus_hours=1.5)
             execute_report(sess)
 
             wait_for_alv_or_continue(sess, timeout=45.0)
