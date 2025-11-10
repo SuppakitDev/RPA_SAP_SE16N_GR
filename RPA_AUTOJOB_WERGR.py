@@ -1,4 +1,4 @@
-# ================================== STO RPA (FINAL, ROBUST EXPORT + TEMP ATTACH) ==================================
+# ================================== GR RPA (FINAL, ROBUST EXPORT + TEMP ATTACH) ==================================
 import os, time, smtplib, traceback, subprocess, psutil
 import win32com.client
 from datetime import datetime, timedelta
@@ -41,20 +41,20 @@ MAIL_TO   = [x.strip() for x in os.getenv("MAIL_TO", "suppakit.s@mcp.meap.com").
 # def email_success_html(elapsed, files):
 #     lis = "".join(f"<li>{Path(p).name}</li>" for p in files)
 #     return f"""<html><body style="font-family:Segoe UI,Arial">
-# <div style="background:#21a366;color:#fff;padding:10px;font-weight:700">✅ STO RPA — Export Success</div>
+# <div style="background:#21a366;color:#fff;padding:10px;font-weight:700">✅ GR RPA — Export Success</div>
 # <table><tr><td><b>⏱ Duration</b></td><td>{elapsed:.1f} s</td></tr>
 # <tr><td><b>🕒 Time</b></td><td>{datetime.now():%Y-%m-%d %H:%M:%S}</td></tr></table>
-# <p><b>Files:</b></p><ul>{lis}</ul><hr><small>🤖 RPA_STO Bot</small></body></html>"""
+# <p><b>Files:</b></p><ul>{lis}</ul><hr><small>🤖 RPA_GR Bot</small></body></html>"""
 
 # def email_error_html(err, elapsed, tries, reason=None):
 #     return f"""<html><body style="font-family:Segoe UI,Arial">
-# <div style="background:#d9534f;color:#fff;padding:10px;font-weight:700">❌ STO RPA — Failed</div>
+# <div style="background:#d9534f;color:#fff;padding:10px;font-weight:700">❌ GR RPA — Failed</div>
 # <table><tr><td><b>⏱ Duration</b></td><td>{elapsed:.1f} s</td></tr>
 # <tr><td><b>🧪 Attempts</b></td><td>{tries}/{MAX_RETRIES}</td></tr>
 # <tr><td><b>🕒 Time</b></td><td>{datetime.now():%Y-%m-%d %H:%M:%S}</td></tr></table>
 # {f"<p><b>Reason:</b> {reason}</p>" if reason else ""}
 # <pre style="background:#fee;border:1px solid #d88;padding:8px;white-space:pre-wrap">{err}</pre>
-# <hr><small>🤖 RPA_STO Bot</small></body></html>"""
+# <hr><small>🤖 RPA_GR Bot</small></body></html>"""
 
 def _exe_dir() -> Path:
     """ตำแหน่งโฟลเดอร์ที่รันอยู่ (รองรับ .py และ .exe onefile)"""
@@ -138,7 +138,7 @@ def send_mail(subject: str, body_html: str, attachments: list[str] | None):
     msg = MIMEMultipart("mixed")
     alt = MIMEMultipart("alternative")
     msg.attach(alt)
-    msg["From"] = formataddr(("RPA_STO", MAIL_FROM))
+    msg["From"] = formataddr(("RPA_GR", MAIL_FROM))
     msg["To"] = ", ".join(to_list)
     if cc_list:
         msg["Cc"] = ", ".join(cc_list)
@@ -337,9 +337,11 @@ def _hitlist_select_variant(session, vname, user=None):
 def fill_running_datetime(session, minus_hours=1):
     now = datetime.now()
     run_date = now.strftime("%d.%m.%Y")  # ใช้วันที่จริง
-    # run_date = "07.11.2025"  # ใช้วันที่จริง
+    # run_date = "09.11.2025"  # ใช้วันที่จริง
 
     run_time = (now - timedelta(hours=minus_hours)).strftime("%H:%M:%S")
+    # run_time = "20:10:00"
+
     base = "wnd[0]/usr/tblSAPLSE16NSELFIELDS_TC"
 
     date_edit = wait_until(session, f"{base}/ctxtGS_SELFIELDS-LOW[2,1]", 3.0, optional=True)
